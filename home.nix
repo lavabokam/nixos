@@ -31,20 +31,17 @@
   
 
   fonts.fontconfig.enable = true;
-  wayland.windowManager.hyprland = {
-    enable = true;
-    package = pkgs.hyprland;
-  }; 
   wayland.windowManager.sway = {
-    enable = false; 
+    enable = true;
+    package = pkgs.swayfx; 
     wrapperFeatures.gtk = true;
     config = {
       terminal = "alacritty";
       menu = "wofi --show run";
       bars = [{
-        fonts.size = "10.0";
+        #fonts.size = "10.0";
         position = "bottom";
-	# command = "waybar";
+#	command = "waybar";
       }];
       output = {
 	eDP-1 = {

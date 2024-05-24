@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports =
@@ -13,7 +13,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_latest;
+  boot.kernelPackages = lib.mkDefault (pkgs.linuxPackagesFor pkgs.linux_latest) ;
 
   networking.hostName = "g14nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -90,6 +90,7 @@
     htop
     file
     hwinfo
+    lshw
     asusctl
     supergfxctl
   ];
@@ -111,11 +112,27 @@
       xdg-desktop-portal-gtk
     ];
   };
- 
+  hardware.nvidia = {
+    modesetting.enable = true;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+ #   prime = {
+ #     offload = {
+ #	enable = true;
+ #	enableOffloadCmd = true;
+ #     };
+ #     amdgpuBusId = "PCI:65:0:0"; #intelBusId = "PCI:0:2:0";	
+ #     nvidiaBusId = "PCI:01:0:0";
+ #   };
+  };
+  services.xserver.videoDrivers = ["nvidia"] ;
+  
   services.xserver = {
     enable = false;
-    displayManager.sddm.wayland.enable = true;
     desktopManager.plasma5.enable = true;
+    displayManager = {
+      sddm.wayland.enable = true;
+    };
     layout = "us";
     xkbOptions = "ctrl:nocaps";
   };

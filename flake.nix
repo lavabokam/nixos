@@ -7,15 +7,15 @@
   
   outputs = {
     self,
-    nixpkgs,
     home-manager,
+    nixpkgs,
     ...
   }: {
     nixosConfigurations.g14nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
-        # ./greetd.nix 
+        #./greetd.nix 
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
