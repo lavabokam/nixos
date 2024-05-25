@@ -84,6 +84,7 @@
     file
     tree
     lsof
+    firefox
     lm_sensors 
     usbutils
     pciutils
@@ -129,7 +130,7 @@
   
   services.xserver = {
     enable = false;
-    desktopManager.plasma5.enable = true;
+    desktopManager.plasma6.enable = true;
     displayManager = {
       sddm.wayland.enable = true;
     };
