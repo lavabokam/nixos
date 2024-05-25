@@ -3,7 +3,7 @@
   home.username = "lava";
   home.homeDirectory = "/home/lava";
 
-  home.stateVersion = "23.11";   
+  home.stateVersion = "24.05";   
   programs.home-manager.enable = true;
   home.packages = with pkgs; [
     google-chrome
@@ -41,7 +41,7 @@
       bars = [{
         #fonts.size = "10.0";
         position = "bottom";
-#	command = "waybar";
+        command = "waybar";
       }];
       output = {
 	eDP-1 = {
@@ -50,13 +50,7 @@
       };
     };
   };
-  xsession = {
-    enable = false;
-    windowManager.i3 = {
-      enable = true;
-      package = pkgs.i3-gaps;
-    }; 
-  };
+  
   programs.git = { 
     enable = true;
     package = pkgs.gitAndTools.gitFull;
