@@ -11,10 +11,16 @@
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = lib.mkDefault (pkgs.linuxPackagesFor pkgs.linux_latest) ;
-
+  boot = {
+   loader.systemd-boot.enable = true;
+   loader.efi.canTouchEfiVariables = true;
+   kernelPackages = lib.mkDefault (pkgs.linuxPackagesFor pkgs.linux_latest) ;
+   kernelModules = [ "hid-apple" ];
+   extraModprobeConfig = ''   
+     options hid_apple fnmode=1
+   '';
+  };
+  #hardware.enableAllFirmware  = true;
   networking.hostName = "g14nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # Enable networking
@@ -24,18 +30,19 @@
   time.timeZone = "Asia/Kolkata";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_IN";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_IN";
-    LC_IDENTIFICATION = "en_IN";
-    LC_MEASUREMENT = "en_IN";
-    LC_MONETARY = "en_IN";
-    LC_NAME = "en_IN";
-    LC_NUMERIC = "en_IN";
-    LC_PAPER = "en_IN";
-    LC_TELEPHONE = "en_IN";
-    LC_TIME = "en_IN";
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
+    LC_ALL = "en_US.UTF-8";
   };
 
   # Enable CUPS to print documents.
@@ -55,8 +62,12 @@
 
   hardware.bluetooth = {
     enable = true;
-    settings.General = { Experimental = true ; };
+    powerOnBoot = true;
+    # for Keychron k2  https://www.perrotta.dev/2021/12/keychron-k2-linux-setup/
+    settings.General = { Experimental = true ;  FastConnectable = true; };
+    settings.Policy = { AutoEnable = true; UserspaceHID = true; };
   };
+
   services.blueman.enable = true;
 
   users.users.lava = {
@@ -106,36 +117,42 @@
   security.pam.services.swaylock = {
     text = "auth include login";
   }; 
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-wlr
-      xdg-desktop-portal-gtk
-    ];
-  };
+#  xdg.portal = {
+#    enable = true;
+#    config.common.default = "*";
+#    extraPortals = with pkgs; [
+#      xdg-desktop-portal-wlr
+#      xdg-desktop-portal-gtk
+#    ];
+#  };
+
   hardware.nvidia = {
     modesetting.enable = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
- #   prime = {
- #     offload = {
- #	enable = true;
- #	enableOffloadCmd = true;
- #     };
- #     amdgpuBusId = "PCI:65:0:0"; #intelBusId = "PCI:0:2:0";	
- #     nvidiaBusId = "PCI:01:0:0";
- #   };
+#    prime = {
+#      offload = {
+#       enable = true;
+#       enableOffloadCmd = true;
+#      };
+#      amdgpuBusId = "PCI:65:0:0"; #intelBusId = "PCI:0:2:0";	
+#      nvidiaBusId = "PCI:01:0:0";
+#    };
   };
+
   services.xserver.videoDrivers = ["nvidia"] ;
-  
+  services.desktopManager.plasma6.enable = true;
+  services.displayManager.sddm.wayland.enable = true;  
   services.xserver = {
     enable = false;
-    desktopManager.plasma6.enable = true;
-    displayManager = {
-      sddm.wayland.enable = true;
-    };
-    layout = "us";
-    xkbOptions = "ctrl:nocaps";
+    xkb.layout = "us";
+    xkb.options = "ctrl:nocaps";
+  };
+
+  services.logind = {
+    lidSwitchExternalPower = "ignore";
+    lidSwitchDocked = "suspend";
+    lidSwitch = "ignore";
   };
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
