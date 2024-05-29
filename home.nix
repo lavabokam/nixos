@@ -45,5 +45,6 @@
 #     ./anyrun.nix   
      ./laptoplid.nix
      ./waybar/waybar.nix
+     ./nushell.nix
    ];
 }
