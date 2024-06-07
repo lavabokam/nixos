@@ -17,7 +17,7 @@
    kernelPackages = lib.mkDefault (pkgs.linuxPackagesFor pkgs.linux_latest) ;
    kernelModules = [ "hid-apple" ];
    extraModprobeConfig = ''   
-     options hid_apple fnmode=1
+     options hid_apple fnmode=2
    '';
   };
   #hardware.enableAllFirmware  = true;
@@ -130,14 +130,15 @@
     modesetting.enable = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
-#    prime = {
-#      offload = {
-#       enable = true;
-#       enableOffloadCmd = true;
-#      };
-#      amdgpuBusId = "PCI:65:0:0"; #intelBusId = "PCI:0:2:0";	
-#      nvidiaBusId = "PCI:01:0:0";
-#    };
+    modesetting.enable = true;
+    prime = {
+      offload = {
+       enable = true;
+       enableOffloadCmd = true;
+      };
+      amdgpuBusId = "PCI:65:0:0"; #intelBusId = "PCI:0:2:0";	
+      nvidiaBusId = "PCI:01:0:0";
+    };
   };
 
   services.xserver.videoDrivers = ["nvidia"] ;
@@ -152,7 +153,7 @@
   services.logind = {
     lidSwitchExternalPower = "ignore";
     lidSwitchDocked = "suspend";
-    lidSwitch = "ignore";
+    lidSwitch = "suspend";
   };
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

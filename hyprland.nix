@@ -14,8 +14,9 @@
     };
   };
   home.file.".config/hypr/hypr.conf".text = ''
-    monitor=eDP-2,highres,0x0,1
+    monitor=eDP-2,preferred,0x0,1
     monitor=DP-1,highres,0x-1600,1
+    monitor=,preferred,auto,1
     exec-once = waybar 
     env = LIBVA_DRIVER_NAME,nvidia
     env = XDG_SESSION_TYPE,wayland
@@ -43,6 +44,7 @@
     bind = SUPER, Q, killactive
     bind = SUPER SHIFT,Q, exit 
 
+    bind = SUPER SHIFT,L, exec, swaylock
 
     # Move focus with mainMod + arrow keys
     bind = $mainMod, left, movefocus, l
@@ -76,18 +78,23 @@
 # Clamshell mode configuration
 
     ## Lid is opened
-    bindl=,switch:off:Lid Switch,exec,~/.config/hypr/lid.sh open
+    bindl=,switch:off:Lid Switch,exec, bash ~/.config/hypr/lid.sh open
 
     ## Lid is closed
-    bindl=,switch:on:Lid Switch,exec,~/.config/hypr/lid.sh close
+    bindl=,switch:on:Lid Switch,exec, bash ~/.config/hypr/lid.sh close
     
-    #bindl=,switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-2, disable"
-    #bindl=,switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-2, highres, 0x0, 1"
+    #bindl=,switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-1, disable"
+    #bindl=,switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1, highres, 0x0, 1"
 
     bindl=, XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
     bindl=, XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
     bindl=, XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    bind =,XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+    binde=,XF86MonBrightnessUp,   exec, brightnessctl s 10%+
+    binde=,XF86MonBrightnessDown, exec, brightnessctl s 10%-
 
+
+    exec-once =  swayidle -w timeout 300 'swaylock -f -c 000000' timeout 600 'hyprctl dispatch dpms off'  resume 'hyprctl dispatch dpms on'  timeout 900 'systemctl suspend' before-sleep 'swaylock -f -c 000000' 
 
   ''; 
 

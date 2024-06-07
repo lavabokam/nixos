@@ -8,6 +8,9 @@
   home.packages = with pkgs; [
     google-chrome
     vscode
+    obsidian 
+    drawio
+    okular
     
     # packages required for sway
     swaylock
@@ -33,6 +36,8 @@
     noto-fonts-emoji
     font-awesome
  
+    brightnessctl
+    numactl
     xdg-desktop-portal-hyprland
   ]; 
   
