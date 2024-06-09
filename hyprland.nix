@@ -41,6 +41,8 @@
     bind = SUPER, A, exec, anyrun
     bind = SUPER, F, togglefloating
     bind = SUPER SHIFT,R, exec, hyprctl reload
+    bind = SUPER SHIFT,E, exec, ranger
+    bind = SuPER SHIFT,O, exec, obsidian
     bind = SUPER, Q, killactive
     bind = SUPER SHIFT,Q, exit 
 
@@ -94,8 +96,9 @@
     binde=,XF86MonBrightnessDown, exec, brightnessctl s 10%-
 
 
-    exec-once =  swayidle -w timeout 300 'swaylock -f -c 000000' timeout 600 'hyprctl dispatch dpms off'  resume 'hyprctl dispatch dpms on'  timeout 900 'systemctl suspend' before-sleep 'swaylock -f -c 000000' 
+    exec-once =  swayidle -w timeout 300 'swaylock -f -c 000000' timeout 600 'hyprctl dispatch dpms off'  resume 'sleep 3; hyprctl dispatch dpms on'  timeout 900 'systemctl suspend' before-sleep 'swaylock -f -c 000000' 
 
   ''; 
+  
 
 }

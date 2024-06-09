@@ -11,6 +11,7 @@
     obsidian 
     drawio
     okular
+    ranger
     
     # packages required for sway
     swaylock

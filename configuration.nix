@@ -127,7 +127,6 @@
 #  };
 
   hardware.nvidia = {
-    modesetting.enable = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     modesetting.enable = true;
@@ -142,8 +141,8 @@
   };
 
   services.xserver.videoDrivers = ["nvidia"] ;
-  services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm.wayland.enable = true;  
+  #services.desktopManager.plasma6.enable = true;
+  #services.displayManager.sddm.wayland.enable = true;  
   services.xserver = {
     enable = false;
     xkb.layout = "us";
