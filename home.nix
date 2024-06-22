@@ -13,6 +13,17 @@
     okular
     ranger
     
+
+    # Development
+    llvmPackages.llvm
+    clang
+    cmake
+    ninja
+    gnumake
+   
+
+    rustup
+
     # packages required for sway
     swaylock
     swayidle

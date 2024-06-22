@@ -141,8 +141,8 @@
   };
 
   services.xserver.videoDrivers = ["nvidia"] ;
-  #services.desktopManager.plasma6.enable = true;
-  #services.displayManager.sddm.wayland.enable = true;  
+  services.desktopManager.plasma6.enable = true;
+  services.displayManager.sddm.wayland.enable = true;  
   services.xserver = {
     enable = false;
     xkb.layout = "us";
@@ -151,8 +151,8 @@
 
   services.logind = {
     lidSwitchExternalPower = "ignore";
-    lidSwitchDocked = "suspend";
-    lidSwitch = "suspend";
+    lidSwitchDocked = "ignore";
+    lidSwitch = "ignore";
   };
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
