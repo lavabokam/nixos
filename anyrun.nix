@@ -1,8 +1,7 @@
-{pkgs, ...}: 
-{
-    programs.anyrun = {
+{ pkgs, ... }: {
+  programs.anyrun = {
     enable = true;
-#    package = pkgs.anyrun; 
+    #    package = pkgs.anyrun; 
     config = {
       plugins = with pkgs.anyrun.packages.${pkgs.system}; [
         applications
@@ -18,7 +17,7 @@
       hidePluginInfo = true;
       closeOnClick = true;
     };
-};
+  };
 }
 # 
 #     # custom css for anyrun, based on catppuccin-mocha

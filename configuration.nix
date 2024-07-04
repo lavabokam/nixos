@@ -105,6 +105,7 @@
     lshw
     asusctl
     supergfxctl
+
   ];
 
   # Asus ROG services
@@ -114,9 +115,9 @@
   security.polkit.enable = true; 
 
   hardware.opengl = { enable = true; driSupport = true; };
-  security.pam.services.swaylock = {
-    text = "auth include login";
-  }; 
+#  security.pam.services.swaylock = {
+#    text = "auth include login";
+#  }; 
 #  xdg.portal = {
 #    enable = true;
 #    config.common.default = "*";
@@ -144,16 +145,27 @@
   services.desktopManager.plasma6.enable = true;
   services.displayManager.sddm.wayland.enable = true;  
   services.xserver = {
-    enable = false;
+    enable = true;
     xkb.layout = "us";
     xkb.options = "ctrl:nocaps";
+    windowManager.i3.enable = true; 
+  };
+  services.displayManager = {
+    defaultSession = "none+i3";
   };
 
-  services.logind = {
-    lidSwitchExternalPower = "ignore";
-    lidSwitchDocked = "ignore";
-    lidSwitch = "ignore";
-  };
+#lightdm.enable = true;
+# = {
+#    defaultSession = "none+i3";
+    #lightdm = { enable = true; };
+ # };
+
+  #services.logind = {
+  #  lidSwitchExternalPower = "ignore";
+  #  lidSwitchDocked = "ignore";
+  #  lidSwitch = "ignore";
+  #};
+  
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
