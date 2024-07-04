@@ -69,6 +69,8 @@
   };
 
   services.blueman.enable = true;
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
 
   users.users.lava = {
     isNormalUser = true;
@@ -86,6 +88,8 @@
   };
   nixpkgs.config.allowUnfree = true;
 
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
     wget
@@ -126,46 +130,48 @@
 #      xdg-desktop-portal-gtk
 #    ];
 #  };
+## 
+#   hardware.nvidia = {
+#     nvidiaSettings = true;
+#     package = config.boot.kernelPackages.nvidiaPackages.stable;
+#     modesetting.enable = true;
+#     prime = {
+#       offload = {
+#        enable = true;
+#        enableOffloadCmd = true;
+#       };
+#       amdgpuBusId = "PCI:65:0:0"; #intelBusId = "PCI:0:2:0";	
+#       nvidiaBusId = "PCI:01:0:0";
+#     };
+#   };
+# 
+#  services.xserver.enable = true;
+#  services.xserver.videoDrivers = ["nvidia"] ;
+ # services.xserver.desktopManager.gnome.enable = true;
+ # services.xserver.displayManager.gdm.enable = true;  
 
-  hardware.nvidia = {
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-    modesetting.enable = true;
-    prime = {
-      offload = {
-       enable = true;
-       enableOffloadCmd = true;
-      };
-      amdgpuBusId = "PCI:65:0:0"; #intelBusId = "PCI:0:2:0";	
-      nvidiaBusId = "PCI:01:0:0";
-    };
-  };
-
-  services.xserver.videoDrivers = ["nvidia"] ;
-  services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm.wayland.enable = true;  
   services.xserver = {
-    enable = true;
     xkb.layout = "us";
     xkb.options = "ctrl:nocaps";
     windowManager.i3.enable = true; 
-  };
-  services.displayManager = {
-    defaultSession = "none+i3";
-  };
-
-#lightdm.enable = true;
-# = {
-#    defaultSession = "none+i3";
-    #lightdm = { enable = true; };
- # };
-
+ #   desktopManager = {
+ #     xterm.enable = false;
+ #     xfce.enable = true;
+ #     xfce.noDesktop = true;
+ #     xfce.enableXfwm = false;
+ #   };
+ };
+ # services.gnome.gnome-keyring.enable = true;
   #services.logind = {
   #  lidSwitchExternalPower = "ignore";
   #  lidSwitchDocked = "ignore";
   #  lidSwitch = "ignore";
   #};
-  
+ # services.displayManager = {
+ #     lightdm.enable = true;
+ #     defaultSession = "none+i3";
+ #   };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

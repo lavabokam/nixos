@@ -2,7 +2,7 @@
   description = "flake for rog g14 workstation";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
   };
 
   outputs = { self, home-manager, nixpkgs, ... }: {
