@@ -16,12 +16,12 @@
    loader.efi.canTouchEfiVariables = true;
    kernelPackages = lib.mkDefault (pkgs.linuxPackagesFor pkgs.linux_latest) ;
    kernelModules = [ "hid-apple" ];
-   extraModprobeConfig = ''   
-     options hid_apple fnmode=2
-   '';
+#   extraModprobeConfig = ''   
+#     options hid_apple fnmode=2
+#   '';
   };
   #hardware.enableAllFirmware  = true;
-  networking.hostName = "g14nixos"; # Define your hostname.
+  networking.hostName = "g14"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # Enable networking
   networking.networkmanager.enable = true;
@@ -109,7 +109,6 @@
     lshw
     asusctl
     supergfxctl
-
   ];
 
   # Asus ROG services
@@ -119,59 +118,34 @@
   security.polkit.enable = true; 
 
   hardware.opengl = { enable = true; driSupport = true; };
-#  security.pam.services.swaylock = {
-#    text = "auth include login";
-#  }; 
-#  xdg.portal = {
-#    enable = true;
-#    config.common.default = "*";
-#    extraPortals = with pkgs; [
-#      xdg-desktop-portal-wlr
-#      xdg-desktop-portal-gtk
-#    ];
-#  };
-## 
-#   hardware.nvidia = {
-#     nvidiaSettings = true;
-#     package = config.boot.kernelPackages.nvidiaPackages.stable;
-#     modesetting.enable = true;
-#     prime = {
-#       offload = {
-#        enable = true;
-#        enableOffloadCmd = true;
-#       };
-#       amdgpuBusId = "PCI:65:0:0"; #intelBusId = "PCI:0:2:0";	
-#       nvidiaBusId = "PCI:01:0:0";
-#     };
-#   };
+
+  hardware.nvidia = {
+     nvidiaSettings = true;
+     package = config.boot.kernelPackages.nvidiaPackages.stable;
+     modesetting.enable = true;
+     prime = {
+       offload = {
+        enable = true;
+        enableOffloadCmd = true;
+       };
+       amdgpuBusId = "PCI:65:0:0"; #intelBusId = "PCI:0:2:0";	
+       nvidiaBusId = "PCI:01:0:0";
+     };
+   };
 # 
-#  services.xserver.enable = true;
-#  services.xserver.videoDrivers = ["nvidia"] ;
+  services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ] ;
  # services.xserver.desktopManager.gnome.enable = true;
  # services.xserver.displayManager.gdm.enable = true;  
+  services.displayManager.sddm.wayland.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
-  services.xserver = {
-    xkb.layout = "us";
-    xkb.options = "ctrl:nocaps";
-    windowManager.i3.enable = true; 
- #   desktopManager = {
- #     xterm.enable = false;
- #     xfce.enable = true;
- #     xfce.noDesktop = true;
- #     xfce.enableXfwm = false;
- #   };
- };
- # services.gnome.gnome-keyring.enable = true;
-  #services.logind = {
-  #  lidSwitchExternalPower = "ignore";
-  #  lidSwitchDocked = "ignore";
-  #  lidSwitch = "ignore";
-  #};
- # services.displayManager = {
- #     lightdm.enable = true;
- #     defaultSession = "none+i3";
- #   };
-
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+   # plasma-browser-integration
+    konsole
+    oxygen
+    kate
+  ];
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
