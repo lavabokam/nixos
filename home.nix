@@ -38,7 +38,12 @@
     font-awesome
 
     numactl
-  ];
+
+    virt-manager
+    python3
+    
+    ( pkgs.callPackage ./intel-sde.nix { inherit pkgs; })
+  ]; 
 
   fonts.fontconfig.enable = true;
 
