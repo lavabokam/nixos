@@ -15,6 +15,7 @@
 
     # Development
     llvmPackages.llvm
+    glibc
     clang
     cmake
     ninja
@@ -22,11 +23,8 @@
 
     rustup
 
-    # packages required for sway
     lazygit
-
     btop
-
     alacritty
 
     #Fonts
@@ -42,14 +40,19 @@
     virt-manager
     python3
     
+    starship
+
     ( pkgs.callPackage ./intel-sde.nix { inherit pkgs; })
+   # ( pkgs.callPackage ./intel-compiler.nix { inherit pkgs; })
   ]; 
 
   fonts.fontconfig.enable = true;
 
   imports = [
     ./git.nix
-    ./nushell.nix
+#    ./nushell.nix
+    ./zsh.nix
+    ./starship.nix
 
 #    ./i3/default.nix
 #    ./hypr/hyprland.nix

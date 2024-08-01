@@ -14,7 +14,8 @@
   boot = {
    loader.systemd-boot.enable = true;
    loader.efi.canTouchEfiVariables = true;
-   kernelPackages = lib.mkDefault (pkgs.linuxPackagesFor pkgs.linux_latest) ;
+   #kernelPackages = lib.mkDefault (pkgs.linuxPackagesFor pkgs.linux_latest) ;
+   kernelPackages = lib.mkDefault (pkgs.linuxPackagesFor pkgs.linux_6_9) ;
    kernelModules = [ "hid-apple" ];
 #   extraModprobeConfig = ''   
 #     options hid_apple fnmode=2
@@ -73,13 +74,14 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # programs.zsh.enable = true;
   users.users.lava = {
     isNormalUser = true;
     description = "lava";
     extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.nushell;
+    shell = pkgs.zsh;
+    ignoreShellProgramCheck = true;
   };
-
   # Allow unfree packages
   nix = {
     package = pkgs.nixFlakes;
@@ -96,6 +98,7 @@
     wget
     curl
     git
+    tmux
     gnutar
     file
     tree
