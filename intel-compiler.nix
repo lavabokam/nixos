@@ -56,7 +56,7 @@ let
   };
   componentString = components: if components == null then "--components default" else
     " --components " + (builtins.concatStringsSep ":" components);
-in pkgs.stdenv.mkDerivation rec
+in pkgs.stdenvNoCC.mkDerivation rec
 {
   pname = "oneapi";
   inherit version;
@@ -93,4 +93,8 @@ in pkgs.stdenv.mkDerivation rec
     ln -s $out/compiler/latest/lib $out/lib
   '';
   autoPatchelfIgnoreMissingDeps = [ "libhwloc.so.5" ];
+#  dontFixup = true;
+#  requiredSystemFeatures = [ "gccarch-exact-${pkgs.stdenvNoCC}" "big-parallel" ];
+  requiredSystemFeatures = [ "big-parallel" ];
+
 }

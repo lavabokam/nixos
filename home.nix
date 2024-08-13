@@ -46,6 +46,9 @@
    # ( pkgs.callPackage ./intel-compiler.nix { inherit pkgs; })
   ]; 
 
+  home.sessionVariables = {
+     EDITOR = "vim";
+  };
   fonts.fontconfig.enable = true;
 
   imports = [
